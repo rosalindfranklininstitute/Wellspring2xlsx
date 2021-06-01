@@ -46,7 +46,7 @@ def ws2xlsx(input_file, output_file):
     toggle = True
     while pos < len(df):
         count = (df['project::Project Title']==df['project::Project Title'][pos]).sum()
-        print(pos, count, toggle)
+        #print(pos, count, toggle)
         if count > 1:
             for col in (0,1,2,3,7):
                 if toggle:
