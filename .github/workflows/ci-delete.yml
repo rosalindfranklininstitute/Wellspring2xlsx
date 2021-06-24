@@ -1,0 +1,30 @@
+name: CI - Delete Branch Images from Dockerhub
+
+on:
+  delete:
+    branches:
+      - '**'
+
+  workflow_dispatch:
+
+jobs:
+  build_env:
+    name: Delete Docker Image
+    runs-on: ubuntu-20.04
+
+    steps:
+      # Configure environment variable depending on which branch we are running on
+      - name: Set env to master
+        if: endsWith(github.ref, '/main')
+        run: echo "DOCKER_REPO_TAG=wellspring2xlsx:latest" >> $GITHUB_ENV
+      - name: Set env to branch
+        if: (!endsWith(github.ref, '/main'))
+        run: echo "DOCKER_REPO_TAG=wellspring2xlsx:${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Set image name
+        run: echo "DOCKER_REPO_NAME=${{ secrets.DOCKER_ORG }}/$DOCKER_REPO_TAG" >> $GITHUB_ENV
+
+      - name: Delete Docker image from Dockerhub
+        run: |
+          echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker rmi $DOCKER_REPO_NAME
