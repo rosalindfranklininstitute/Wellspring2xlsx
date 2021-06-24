@@ -42,3 +42,4 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push $DOCKER_REPO_NAME
+        if: (!startsWith(github.ref, 'refs/pull/'))
