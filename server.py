@@ -13,12 +13,12 @@ def download():
 
 @app.route('/data/<path:path>')
 def send_js(path):
-    return send_from_directory('data', path)
+    return send_from_directory('/tmp/', path)
 
 @app.route('/', methods=['POST'])
 def upload_file():
     uploaded_file = request.files['file']
     if uploaded_file.filename != '':
-        uploaded_file.save('data/uploaded.csv')
-    ws2xlsx('data/uploaded.csv', 'data/uploaded.xlsx')
+        uploaded_file.save('/tmp/uploaded.csv')
+    ws2xlsx('/tmp/uploaded.csv', '/tmp/uploaded.xlsx')
     return redirect(url_for('download'))
