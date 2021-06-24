@@ -42,5 +42,5 @@ services:
       - 'traefik.http.routers.nginx.tls.certresolver=letsencryptresolver'
       - 'traefik.http.routers.nginx.service=nginxservice'
       - 'traefik.http.services.nginxservice.loadbalancer.server.port=80'
-    depends_on:
-      - traefik
+#    depends_on:
+#      - traefik
