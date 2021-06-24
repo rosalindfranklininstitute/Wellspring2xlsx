@@ -1,4 +1,4 @@
-name: CI - Build Container Images and Test
+name: CI - Build Container Images and Push to Dockerhub
 
 on:
   push:
